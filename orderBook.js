@@ -1,6 +1,6 @@
 //order = {type: `buy` or `sell`, quantity: 10, price: 9000}
 
-//An order book tracks all buy and sell requests from traders for Bitcoin assets at various price levels. When a trader su
+//An order book tracks all buy and sell requests from traders for Bitcoin assets at various price levels. When a trader
 //submits a trade it is either fulfilled immediately, if there is a matching order in the book, or it is added to the book to be fulfilled later.
 
 function reconcileOrder(orderBook, incomingOrder) { // orderBook = array of objects, incoming = object
@@ -17,13 +17,15 @@ function reconcileOrder(orderBook, incomingOrder) { // orderBook = array of obje
 // for this function, we know the order objects have the same type && price
 function fulfillOrders(existingBook, incomingOrder) { // existingBook = object, incomingOrder = object
   if (existingBook.quantity === incomingOrder.quantity) {
-    existingBook.quantity = 0 // setting the existingOrder's quantity to 0 signifies that it is fulfilled.
-    incomingOrder.quantity = 0 // setting the incomingOrder's quantity to 0 signifies that it is fulfilled.
-  } else if (existingBook.quantity !== incomingOrder.quantity) {
-    incomingOrder.push(existingBook)
-  }
+    existingBook.quantity = 0 // setting the existingOrder's quantity to 0 signifies that it is fulfilled. and start at beginning of array again??
+    incomingOrder.quantity = 0 // setting the incomingOrder's quantity to 0 signifies that it is fulfilled. and start at beginning of the array again??
+  } else if (existingBook.quantity !== incomingOrder.quantity) { // if existingOrder quantity is NOT equal to incomingOrder quantity
+    incomingOrder.push(existingBook) // then push that order into the exsisting book array to recirculate
+  } if (existingBook.type === incomingOrder.type && existingBook.quantity >= incomingOrder.quantity && existingBook.price === incomingOrder.price) {
+    (existingBook.quantity / incomingOrder.quantity) = n % // if the right type, the right price and lower quantity 
+      n %.push(existingBook)                           // then in existing book fulfill and return the remainder to existing book
 
-} else
+  } else
   // handle the other condition (else if)
   // handle the last condition (else)
 
