@@ -5,7 +5,7 @@
 
 function reconcileOrder(book, incomingOrder) {
   // book = array of objects, incoming = object
-  for (let i = 0; i < book.length; i++) {
+  for (let i = 0; i < book.length && incomingOrder.quantity > 0; i++) {
     if (book[i].type !== incomingOrder.type && // if equal (`buy && `sell`) || ( `sell` && `buy`)
       book[i].price === incomingOrder.price) { // if equal (9000 && 9000), for exampleif (existingBook.quantity === incomingOrder.quantity) {
       fulfillOrders(book[i], incomingOrder)
@@ -24,14 +24,15 @@ function fulfillOrders(existingOrder, incomingOrder) {
   if (existingOrder.quantity === incomingOrder.quantity) {
     existingOrder.quantity = 0 // setting the existingOrder quantity to 0 signifies that it is fulfilled. and start at beginning of array again??
     incomingOrder.quantity = 0 // setting the incomingOrder's quantity to 0 signifies that it is fulfilled. and start at beginning of the array again??
-
+  } else if (existingOrder.quantity < incomingOrder.quantity) {
+    incomingOrder.quantity -= existingOrder.quantity
+    existingOrder.quantity = 0
   } else {
-    //  return incomingOrder.quantity.push(existingBook)
-  }
-}// existingBook.quantity - incomingOrder.quantity =  // if the right type, the right price and lower quantity 
-// then in existing book fulfill and return the remainder to existing book
-// if it meets nothing then it has to go to existing order */
+    existingOrder.quantity -= incomingOrder.quantity
+    incomingOrder.quantity = 0// existingOrder.quantity > incomingOrder.quantity
 
+  }
+}
 
 
 module.exports = reconcileOrder
