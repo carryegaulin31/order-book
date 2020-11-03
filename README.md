@@ -7,6 +7,7 @@ In the initial commit to this project, you have been provided with a basic proje
 Working in a branch called answer, implement your function to get your tests to pass. Once you are done, push your branch up to GitHub, create a pull request, and request review from the instructor.
 
 ## Requirements
+
 An order book tracks all buy and sell requests from traders for Bitcoin assets at various price levels. When a trader submits a trade it is either fulfilled immediately, if there is a matching order in the book, or it is added to the book to be fulfilled later.
 
 Assume starting with an empty order book, let's walkthrough several scenarios.
@@ -24,6 +25,7 @@ Assume starting with an empty order book, let's walkthrough several scenarios.
 **Sell 25 BTC at 5800:** The order book has a buy order at this price point but for a smaller quantity. This order can be partially fulfilled, the corresponding buy order is used up and is removed from the order book and the remainder of this order (Sell 10 BTC at 5800) is added to the book.
 
 ## Extra Credit
+
 No one is ever upset about a good deal. We want to adjust the code so that it will fulfill orders that are not exact matches but would result in both parties benefitting.
 
 For example, assume the book contains an order to buy 15 BTC at 6000. When we receive a sell order for 15 BTC at 5900 we should fulfill this order given that the buyer will pay less (5900 vs 6000) and the seller will receive the amount requested (5900).
