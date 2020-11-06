@@ -1,14 +1,11 @@
-// order = {type: `buy` or `sell`, quantity: 10, price: 9000}
-
-// An order book tracks all buy and sell requests from traders for Bitcoin assets at various price levels. When a trader
-// submits a trade it is either fulfilled immediately, if there is a matching order in the book, or it is added to the book to be fulfilled later.
-
 function reconcileOrder(book, incomingOrder) {
-  // book = array of objects, incoming = object
   for (let i = 0; i < book.length && incomingOrder.quantity > 0; i++) {
-    if (book[i].type !== incomingOrder.type && // if equal (`buy && `sell`) || ( `sell` && `buy`)
-      book[i].price === incomingOrder.price) { // if equal (9000 && 9000), for exampleif (existingBook.quantity === incomingOrder.quantity) {
-      fulfillOrders(book[i], incomingOrder)
+    if (book[i].type !== incomingOrder.type &&
+      book[i].price === incomingOrder.price) {
+      let [order] = book.splice(i, 1) // removes the order and destructures it from the array to be a single object
+
+      fulfillOrders(order, incomingOrder, book)
+      i-- // rolls back the i variable as we have removed an item from the array
     }
   }
   book.push(incomingOrder)
@@ -17,94 +14,22 @@ function reconcileOrder(book, incomingOrder) {
 }
 
 // for this function, we know the order objects have the same type && price
-function fulfillOrders(existingOrder, incomingOrder) {
-  // existingBook = object, incomingOrder = object
-
-  // then push that order into the exsisting book array to recirculate
+function fulfillOrders(existingOrder, incomingOrder, book,) {
+  // existingBook = object, incomingOrder = objec
   if (existingOrder.quantity === incomingOrder.quantity) {
-    existingOrder.quantity = 0 // setting the existingOrder quantity to 0 signifies that it is fulfilled. and start at beginning of array again??
+    existingOrder.quantity = 0 // setting the existingOrder quantity VALUE to 0 signifies that it is fulfilled. and start at beginning of array again??
     incomingOrder.quantity = 0 // setting the incomingOrder's quantity to 0 signifies that it is fulfilled. and start at beginning of the array again??
   } else if (existingOrder.quantity < incomingOrder.quantity) {
     incomingOrder.quantity -= existingOrder.quantity
     existingOrder.quantity = 0
   } else {
     existingOrder.quantity -= incomingOrder.quantity
-    incomingOrder.quantity = 0// existingOrder.quantity > incomingOrder.quantity
+    incomingOrder.quantity = 0 // existingOrder.quantity > incomingOrder.quantity
 
+    book.push(existingOrder)
   }
+
+  // return book
 }
 
-
 module.exports = reconcileOrder
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
